@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MapExample.Controllers
+namespace BestChat.Controllers
 {
     public class MapController : Controller
     {
@@ -18,13 +18,6 @@ namespace MapExample.Controllers
         {
             return View();
         }
-        public ActionResult HeatMap()
-        {
-            return View();
-        }
-        public ActionResult SignalR()
-        {
-            return View();
-        }
+   
     }
 }
