@@ -15,4 +15,10 @@
         var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
         layer.addTo(map);
     });
+    $(document).ready(function () {
+        $.post("/api/UserPosition", { Latitude: 23.45, Longitude: 45.45 })
+            .done(function (data) {
+                alert("Data Loaded: " + data);
+            });
+    });
 </script>
