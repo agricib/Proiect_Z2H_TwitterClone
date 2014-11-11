@@ -1,31 +1,42 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<script src="~/Scripts/jquery.signalR-2.1.2.js"></script>
+<script src="~/signalr/hubs"></script>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
+<div id="map" style="height: 450px;width: 800px;margin:0 auto"></div>
+<script>
+    $(document).ready(function () {
+        var map = L.map('map').setView([44.5, 26], 10);
+        var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+        layer.addTo(map);
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+        var positionHub = $.connection.positionHub;
+        positionHub.client.addPosition = function (x, y) {
+            console.log('Data received!');
+            var marker = L.marker([x, y]);
+            marker.addTo(map);
+            map.setView([x, y]);
+        };
+
+        var hubConnectionFailed = function () {
+            console.log('Hub connection failed!');
+        };
+
+        var hubConnected = function () {
+            console.log('Hub connected!');
+        };
+
+
+        $.connection.hub.start()
+            .done(hubConnected)
+            .fail(hubConnectionFailed);
+
+        var onClick = function (e) {
+            console.log(e.latlng);
+            positionHub.server.sendPosition(e.latlng.lat, e.latlng.lng);
+        };
+        map.on('click', onClick);
+
+    });
+</script>
