@@ -27,7 +27,7 @@ namespace BestChat.ApiControllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return User.Identity.Name;
+                return position.Latitude + " " + position.Longitude;
             }
             else
             {
