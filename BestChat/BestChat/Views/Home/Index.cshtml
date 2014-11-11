@@ -12,8 +12,8 @@
         var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
         layer.addTo(map);
 
-        var positionHub = $.connection.positionHub;
-        positionHub.client.addPosition = function (x, y) {
+        var positionHub = $.connection.positinHub;
+            positionHub.client.addPosition = function (x, y) {
             console.log('Data received!');
             var marker = L.marker([x, y]);
             marker.addTo(map);
