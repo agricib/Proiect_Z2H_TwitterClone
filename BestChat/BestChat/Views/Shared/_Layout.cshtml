@@ -23,27 +23,20 @@
                 </button>
                 @Html.ActionLink("BestChat", "Index", null, new { @class = "navbar-brand" })
             </div>
+
+
+            <ul class="nav nav-pills" role="tablist">
+                <li role="presentation"><a href="#">Profile</a></li>
+                <li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>
+            </ul>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    
-                    <li>
-                        <div class="btn-group">
-                            <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
-                                <input type="text" class="form-control" placeholder="Search">
-                                </button>
-                            
-                                
-                                
-                            
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Search Location</a></li>
-                                <li><a href="#">Search Post</a></li>
-                                <li><a href="#">Search User</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </div>
-                    </li>
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-search"></span> Search
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Location</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search User</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Post</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
