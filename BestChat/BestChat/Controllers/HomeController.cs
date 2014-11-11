@@ -17,10 +17,6 @@ namespace BestChat.Controllers
             return View();
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         public ActionResult About()
         {
