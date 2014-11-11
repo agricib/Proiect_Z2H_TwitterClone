@@ -33,6 +33,11 @@ namespace BestChat
             //   appSecret: "");
 
             //app.UseGoogleAuthentication();
+
+            app.UseFacebookAuthentication(
+          appId: "385592041606856",
+          appSecret: "1279746354dca5d1f72ee1c1a24dfea5");
+
         }
     }
 }
