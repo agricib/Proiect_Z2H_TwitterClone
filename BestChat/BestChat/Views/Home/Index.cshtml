@@ -16,9 +16,22 @@
         layer.addTo(map);
     });
     $(document).ready(function () {
-        $.post("/api/UserPosition", { Latitude: 23.45, Longitude: 45.45 })
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(SendPosition);
+        }
+        else {
+            alert( "Geolocation is not supported by this browser.");
+        }
+        function SendPosition(position) {
+           //x.innerHTML = "Latitude: " + position.coords.latitude +
+           //  "<br>Longitude: " + position.coords.longitude;
+            $.post("/api/UserPosition", { Latitude: position.coords.latitude, Longitude: position.coords.longitude })
             .done(function (data) {
                 alert("Data Loaded: " + data);
+               
             });
+           
+        }
+
     });
 </script>
