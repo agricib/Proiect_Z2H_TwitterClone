@@ -23,24 +23,34 @@
                 </button>
                 @Html.ActionLink("BestChat", "Index", null, new { @class = "navbar-brand" })
             </div>
-                    
+
 
             <ul class="nav nav-pills" role="tablist">
+               
                 <li role="presentation"><a href="#">Profile</a></li>
                 <li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>
-
-                <div class="navbar-collapse collapse">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="glyphicon glyphicon-search"></span> Search
-                    </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Location</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search User</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Post</a></li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
+                    </a></li>
+                <li>
+                    <form class="navbar-form navbar-left" role="search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">GO</button>
+                            <input type="text" class="form-control" placeholder="Search Location">
+                        </span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">GO</button>
+                            <input type="text" class="form-control" placeholder="Search User">
+                        </span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">GO</button>
+                            <input type="text" class="form-control" placeholder="Search Post">
+                        </span>
+                    </form>
+                </li>
             </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
     <div class="container body-content">
