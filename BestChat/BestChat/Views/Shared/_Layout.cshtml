@@ -21,7 +21,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Search", "Index", "Search")</li>
+                    
+                    <li>
+                        <div class="btn-group">
+                            <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
+                                <input type="text" class="form-control" placeholder="Search">
+                                </button>
+                            
+                                
+                                
+                            
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Search Location</a></li>
+                                <li><a href="#">Search Post</a></li>
+                                <li><a href="#">Search User</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
