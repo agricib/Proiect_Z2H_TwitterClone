@@ -7,37 +7,12 @@
 
 <div id="map" style="height: 450px;width: 800px;margin:50px auto"></div>
 <script>
+
+
+
     $(document).ready(function () {
         var map = L.map('map').setView([44.5, 26], 10);
         var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
         layer.addTo(map);
-
-        var positionHub = $.connection.positinHub;
-            positionHub.client.addPosition = function (x, y) {
-            console.log('Data received!');
-            var marker = L.marker([x, y]);
-            marker.addTo(map);
-            map.setView([x, y]);
-        };
-
-        var hubConnectionFailed = function () {
-            console.log('Hub connection failed!');
-        };
-
-        var hubConnected = function () {
-            console.log('Hub connected!');
-        };
-
-
-        $.connection.hub.start()
-            .done(hubConnected)
-            .fail(hubConnectionFailed);
-
-        var onClick = function (e) {
-            console.log(e.latlng);
-            positionHub.server.sendPosition(e.latlng.lat, e.latlng.lng);
-        };
-        map.on('click', onClick);
-
     });
 </script>
