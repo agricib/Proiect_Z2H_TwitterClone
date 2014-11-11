@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace University.Entities.BaseEntity
+namespace User.Entities.BaseEntity
 {
     public class BaseEntity<T>
     {
