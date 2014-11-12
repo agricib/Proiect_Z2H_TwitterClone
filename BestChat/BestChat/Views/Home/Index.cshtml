@@ -5,13 +5,21 @@
 
 <div id="map" style="height: 450px;width: 800px;margin:50px auto"></div>
 <script>
-
-
+    var map;
+    function addMarker(x, y) {
+        console.log('Data recived');
+        var marker = L.marker([x, y], { draggable: true });
+        marker.addTo(map);
+        map.setView([x, y]);
+    }
 
     $(document).ready(function () {
-        var map = L.map('map').setView([44.5, 26], 10);
+        map = L.map('map').setView([44.5, 26], 10);
         var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
         layer.addTo(map);
+      
+        
+        
     });
     $(document).ready(function () {
         if (navigator.geolocation) {
@@ -21,8 +29,8 @@
             alert( "Geolocation is not supported by this browser.");
         }
         function SendPosition(position) {
-           //x.innerHTML = "Latitude: " + position.coords.latitude +
-           //  "<br>Longitude: " + position.coords.longitude;
+            addMarker(position.coords.latitude, position.coords.longitude);
+         
             $.post("/api/UserPosition", { Latitude: position.coords.latitude, Longitude: position.coords.longitude })
             .done(function (data) {
                 alert("Data Loaded: " + data);
