@@ -6,11 +6,11 @@
 <div id="map" style="height: 450px;width: 800px;margin:100px auto"></div>
 <script>
     var map;
-    function addMarker(x, y) {
+    function addMarker(user) {
         console.log('Data recived');
-        var marker = L.marker([x, y], { draggable: true });
-        marker.addTo(map);
-        map.setView([x, y]);
+        var marker = L.marker([user.Latitude,user.Longitude], { draggable: true });
+        marker.addTo(map).bindPopup(user.UserName).openPopup();;
+        map.setView([user.Latitude, user.Longitude]);
     }
 
     $(document).ready(function () {
@@ -49,7 +49,7 @@
         var div = $('#onlineUsers');
         users.forEach(function (user) {
             console.log(user);         
-            addMarker(user.Latitude,user.Longitude);
+            addMarker(user);
             div.append($('<p>' + user.UserName + '</p>'));
         });
 
