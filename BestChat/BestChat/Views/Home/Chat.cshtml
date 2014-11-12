@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Messages";
+}
+
+   <body>
+            <div class="container">
+                <input type="text" id="message" />
+                <input type="text" id="sendmessage" value="Send" />
+                <input type="hidden" id="displayname" />
+                <ul id="discussion"></ul>
+            </div>
+            <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+            <script src="~/Scripts/jquery.signalR-2.1.2.js"></script>
+            <script src="/signalr/hubs"></script>
+            <script type="text/javascript">
+    $(function () {
+        var chat = $.connection.chat;
+        chat.client.broadcastMessage = function (name, message) {
+            var encodedName = $('<div/>').text(name).html();
+            var encodedMsg = $('<div/>').text(message).html();
+            $('#discussion').append('<li><strong>'+encodeName+
+                '</strong>:&nbsp;&nbsp;' + enncodeMsg + '</li>');
+                        };
+        $("#displayname").val(prompt('Enter your name:', ''));
+        $('message'), focus();
+        $.connection.hub.start().done(function () {
+            $('sendmessage').click(function () {
+                chat.server.send($('#displayname').val(), $('#message').val());
+                $('#message').val('').focus();
+            });
+        });
+    });
+
+            </script>
+       </body>
+    
+
+
