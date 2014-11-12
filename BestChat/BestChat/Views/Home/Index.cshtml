@@ -3,7 +3,7 @@
 }
 
 
-<div id="map" style="height: 450px;width: 800px;margin:50px auto"></div>
+<div id="map" style="height: 450px;width: 800px;margin:100px auto"></div>
 <script>
     var map;
     function addMarker(x, y) {
@@ -39,5 +39,16 @@
            
         }
 
+    });
+</script>
+
+<div id="onlineUsers">
+    
+</div>
+<script>
+    $.get("/api/User").done(function (users) {
+        users.foreach(function (user) {
+            console.log(user);
+        });
     });
 </script>

@@ -35,7 +35,7 @@ namespace BestChat
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication();
+            app.UseGoogleAuthentication();
 
             app.UseFacebookAuthentication(
           appId: "385592041606856",

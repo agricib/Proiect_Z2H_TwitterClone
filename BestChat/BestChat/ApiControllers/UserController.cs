@@ -14,7 +14,7 @@ namespace BestChat.Controllers
         public IEnumerable<UserInfo> Get()
         {
            using( var context = new UserContext()){
-               return context.UserSet;
+               return context.UserSet.Where(userinfo => userinfo.Online).ToList();
 
             }
         }
