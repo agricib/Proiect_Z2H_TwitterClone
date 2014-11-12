@@ -15,7 +15,7 @@ namespace BestChat
             Clients.All.broascastMessage(name, message);
         }
 
-        public override System.Threading.Tasks.Task OnConnected()
+        public void RegisterMe()
         {
             var name = Context.User.Identity.Name;
             using (var db = new UserContext())
@@ -36,7 +36,7 @@ namespace BestChat
 
                 db.SaveChanges();
             }
-            return base.OnConnected();
+             
         }
 
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
