@@ -39,7 +39,7 @@
 </div>
 <script>
     $.get("/api/User").done(function (users) {
-        users.foreach(function (user) {
+        users.forEach(function (user) {
             console.log(user);
         });
     });
