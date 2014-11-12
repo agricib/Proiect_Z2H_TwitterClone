@@ -33,3 +33,14 @@
 
     });
 </script>
+
+<div id="onlineUsers">
+    
+</div>
+<script>
+    $.get("/api/User").done(function (users) {
+        users.foreach(function (user) {
+            console.log(user);
+        });
+    });
+</script>
