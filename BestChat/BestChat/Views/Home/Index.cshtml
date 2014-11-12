@@ -47,8 +47,11 @@
 </div>
 <script>
     $.get("/api/User").done(function (users) {
-        users.foreach(function (user) {
+        users.forEach(function (user) {
             console.log(user);
+
+            var div = $('#onlineUsers');
+            div.append($('<p>' + user.Name + '</p>'));
         });
     });
 </script>
