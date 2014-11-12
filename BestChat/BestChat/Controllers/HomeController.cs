@@ -34,12 +34,7 @@ namespace BestChat.Controllers
 
             return View();
         }
-        public ActionResult Chat()
-        {
-            ViewBag.Message = "Your messages page.";
 
-            return View();
-        }
         public ActionResult Profile()
         {
             ViewBag.Message = "Your profile page.";
