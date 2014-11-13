@@ -82,7 +82,7 @@
         console.log('Data recived');
         var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
         markers.push(marker);
-        marker.addTo(map).bindPopup(user.UserName).openPopup();
+        marker.addTo(map).bindPopup(user.UserName);
        
     }
 
@@ -121,6 +121,7 @@
         }
         map.on('dragend', onClick);
         map.on('zoomend', onClick);
+        map.on('viewreset', onClick);
 
     });
     $(document).ready(function () {
