@@ -48,11 +48,12 @@
 
 <script>
 
-
+    var markers=new Array();
     var map;
     function addMarker(user) {
         console.log('Data recived');
         var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
+        markers.push(marker);
         marker.addTo(map).bindPopup(user.UserName).openPopup();;
         map.setView([user.Latitude, user.Longitude]);
     }
@@ -63,28 +64,35 @@
         layer.addTo(map);
 
         var onClick = function (e) {
-            var users = [];
+           
+            for (var i=0;i<markers.length;i++){
+                map.removeLayer(markers[i]);
+            }
+           
+            var users=[];
             var bounds = map.getBounds();
-            var westt = bounds.getWest();
-            var southt = bounds.getSouth();
-            var eastt = bounds.getEast();
-            var northt = bounds.getNorth();
-            $.get("/api/UserPosition", { east: eastt, vest: westt, north: northt, south: southt }).done(function (users) {
-                if (users = null) {
-                    console.log("Nu am mai primit!");
+            var west = bounds.getWest();
+            var south = bounds.getSouth();
+            var east = bounds.getEast();
+            var north = bounds.getNorth();
+           
+            $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
+                if (users === null) {
+                    
                 }
                 else {
                     users.forEach(function (user) {
 
                         addMarker(user);
-                        console.log("am primit" + users);
+                       
                     });
                 }
             });
             
 
         }
-        map.on('drag', onClick);
+        map.on('dragend', onClick);
+        map.on('zoomend', onClick);
 
     });
     $(document).ready(function () {
