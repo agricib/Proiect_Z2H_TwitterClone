@@ -92,7 +92,7 @@
         var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
         layer.addTo(map);
 
-        var onClick = function (e) {
+        var showMarkerOnMap = function (e) {
 
             for (var i = 0; i < markers.length; i++) {
                 map.removeLayer(markers[i]);
@@ -124,9 +124,10 @@
 
 
         }
-        map.on('dragend', onClick);
-        map.on('zoomend', onClick);
-        map.on('viewreset', onClick);
+       
+        map.on('dragend', showMarkerOnMap);
+        map.on('zoomend', showMarkerOnMap);
+        map.on('viewreset', showMarkerOnMap);
 
     });
     $(document).ready(function () {
