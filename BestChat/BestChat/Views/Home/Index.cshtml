@@ -11,27 +11,27 @@
         <div class="col-md-3">
             <div class="list-group input-group-sm">
 
-                <a href="#" class="list-group-item disabled">
-                    Search
-                </a>
-                <a href="#" class="list-group-item">
+        <a href="#" class="list-group-item disabled">
+            Search
+        </a>
+        <a href="#" class="list-group-item">
 
-                    <button class="btn btn-success" type="button">GO</button>
-                    <input type="text" class="form-control" placeholder="Search Location">
+            <button class="btn btn-success" type="button">GO</button>
+            <input type="text" class="form-control" placeholder="Search Location">
 
-                </a>
-                <a href="#" class="list-group-item">
+        </a>
+        <a href="#" class="list-group-item">
 
-                    <button class="btn btn-warning" type="button" id="buton-SearchUser">GO</button>
-                    <input type="text" class="form-control" placeholder="Search User" id="input-SearchUser">
+            <button class="btn btn-warning" type="button" id="buton-SearchUser">GO</button>
+            <input type="text" class="form-control" placeholder="Search User" id="input-SearchUser">
 
-                </a>
-                <a href="#" class="list-group-item">
+        </a>
+        <a href="#" class="list-group-item">
 
-                    <button class="btn btn-info" type="button">GO</button>
-                    <input type="text" class="form-control" placeholder="Search Post">
-                </a>
-            </div>
+            <button class="btn btn-info" type="button">GO</button>
+            <input type="text" class="form-control" placeholder="Search Post">
+        </a>
+    </div>
         </div>
         <div class="col-md-7" id="map" style="height:450px"></div>
         <div class="col-md-2">
@@ -39,8 +39,8 @@
             <ul class="list-group">
                 <li class="list-group-item" id="list-useri" style="list-style:none">
                 </li>
-            </ul>
-        </div>
+        </ul>
+    </div>
     </div>
 </div>
 
@@ -52,11 +52,12 @@
 
 <script>
 
-
+    var markers=new Array();
     var map;
     function addMarker(user) {
         console.log('Data recived');
         var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
+        markers.push(marker);
         marker.addTo(map).bindPopup(user.UserName).openPopup();;
         map.setView([user.Latitude, user.Longitude]);
     }
@@ -67,28 +68,35 @@
         layer.addTo(map);
 
         var onClick = function (e) {
-            var users = [];
+           
+            for (var i=0;i<markers.length;i++){
+                map.removeLayer(markers[i]);
+            }
+           
+            var users=[];
             var bounds = map.getBounds();
-            var westt = bounds.getWest();
-            var southt = bounds.getSouth();
-            var eastt = bounds.getEast();
-            var northt = bounds.getNorth();
-            $.get("/api/UserPosition", { east: eastt, vest: westt, north: northt, south: southt }).done(function (users) {
-                if (users = null) {
-                    console.log("Nu am mai primit!");
+            var west = bounds.getWest();
+            var south = bounds.getSouth();
+            var east = bounds.getEast();
+            var north = bounds.getNorth();
+           
+            $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
+                if (users === null) {
+                    
                 }
                 else {
                     users.forEach(function (user) {
 
                         addMarker(user);
-                        console.log("am primit" + users);
+                       
                     });
                 }
             });
-
+            
 
         }
-        map.on('drag', onClick);
+        map.on('dragend', onClick);
+        map.on('zoomend', onClick);
 
     });
     $(document).ready(function () {
@@ -110,14 +118,13 @@
     });
 </script>
 
-<div id="onlineUsers">
 
-</div>
 <script>
     var showusers = function (users) {
         $('#onlineUsers').empty();
         var div = $('#onlineUsers');
         users.forEach(function (user) {
+            if (user.Online===true) {
             console.log(user);
             addMarker(user);
             var time = (new Date).getTime() - user.PositionDate;
@@ -125,17 +132,27 @@
                 $('<li>').append(
             $('<span>').attr('class', 'glyphicon glyphicon-ok-circle').append(
                 $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
+            }
+            else {
+                var time = (new Date).getTime() - user.PositionDate;
+                $('#list-useri').append(
+                $('<li>').append(
+                $('<span>').attr('class', 'glyphicon glyphicon-remove-circle').append(
+                    $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
 
-            //div.append($('<p>' + user.UserName + '</p>'));
+            div.append($('<p>' + user.UserName + '</p>'));
         });
 
     };
+
+   
     var onlineusers = [];
     $.get("/api/User").done(function (users) {
         onlineusers = users;
         showusers(users);
 
     });
+   
     $("#buton-SearchUser").on("click", function () {
         var username = $("#input-SearchUser").val();
         var findedusers = [];
