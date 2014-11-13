@@ -2,8 +2,8 @@
     ViewBag.Title = "Home Page";
 }
 
-<script src="~/Scripts/jquery-2.1.1.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
+@*<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>*@
 
 
 <div class="container" style="width: 100%; margin: 50px auto; ">
@@ -42,7 +42,9 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+<div class="modal fade btnuser" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -68,8 +70,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 
@@ -148,10 +148,10 @@
         }
 
     });
-</script>
 
 
-<script>
+
+
     var moveuser = function (users) {
         $('#onlineUsers').empty();
 
@@ -172,7 +172,7 @@
                 console.log(user);
                 addMarker(user);
                 var time = (new Date).getTime() - user.PositionDate;
-                var use = '<li><button type="button" class="btn btn-group-vertical" data-toggle="modal" data-target="#exampleModal" style="width:150px;border: 1px solid #999;"> '
+                var use = '<li><button type="button" class="btn btn-group-vertical" data-toggle="modal" data-target=".btnuser" style="width:150px;border: 1px solid #999;"> '
                     + user.UserName + '</button></li>';
                 $('#list-useri').append(use);
 
@@ -180,16 +180,13 @@
             }
             else {
                 var time = (new Date).getTime() - user.PositionDate;
-                var us = '<li><button type="button" class="btn btn-group-vertical btn-danger" data-toggle="modal" data-target="#exampleModal" style="width:150px;border: 1px solid #999;"> '
+                var us = '<li><button type="button" class="btn btn-group-vertical btn-danger" data-toggle="modal"  style="width:150px;border: 1px solid #999;"> '
                     + user.UserName + '</button></li>';
                 $('#list-useri').append(us);
             }
         });
 
     };
-
-
-
 
     $("#buton-SearchUser").on("click", function () {
         var username = $("#input-SearchUser").val();
@@ -202,4 +199,15 @@
         });
         moveuser(findedusers);
     });
+
+
+    $('#BestModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    })
 </script>

@@ -29,7 +29,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     @Html.ActionLink("BestChat", "Index", null, new { @class = "navbar-brand" })
-               </form>
+                </form>
 
                 @Html.Partial("_LoginPartial")
             </div>
@@ -52,9 +52,8 @@
         //.fail(function () {
         //    console.log('Not connected!');
         //});
-            
+
     </script>
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
