@@ -114,32 +114,41 @@
     });
 </script>
 
-<div id="onlineUsers">
 
-</div>
 <script>
     var showusers = function (users) {
         $('#onlineUsers').empty();
         var div = $('#onlineUsers');
         users.forEach(function (user) {
-            console.log(user);
-            addMarker(user);
-            var time = (new Date).getTime() - user.PositionDate;
-            $('#list-useri').append(
+            if (user.Online===true) {
+                console.log(user);
+                addMarker(user);
+                var time = (new Date).getTime() - user.PositionDate;
+                $('#list-useri').append(
                 $('<li>').append(
-            $('<span>').attr('class', 'glyphicon glyphicon-ok-circle').append(
-                $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
+                $('<span>').attr('class', 'glyphicon glyphicon-ok-circle').append(
+                    $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
+            }
+            else {
+                var time = (new Date).getTime() - user.PositionDate;
+                $('#list-useri').append(
+                $('<li>').append(
+                $('<span>').attr('class', 'glyphicon glyphicon-remove-circle').append(
+                    $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
 
-            div.append($('<p>' + user.UserName + '</p>'));
-        });
+            }
+              });
 
     };
+
+   
     var onlineusers = [];
     $.get("/api/User").done(function (users) {
-        onlineusers = users;
+         onlineusers = users;
         showusers(users);
 
     });
+   
     $("#buton-SearchUser").on("click", function () {
         var username = $("#input-SearchUser").val();
         var findedusers = [];
