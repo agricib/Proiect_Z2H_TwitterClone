@@ -124,10 +124,11 @@
 
 
         }
-       
+        
         map.on('dragend', showMarkerOnMap);
         map.on('zoomend', showMarkerOnMap);
         map.on('viewreset', showMarkerOnMap);
+        showMarkerOnMap();
 
     });
     $(document).ready(function () {
