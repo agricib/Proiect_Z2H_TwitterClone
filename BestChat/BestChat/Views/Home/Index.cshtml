@@ -38,9 +38,10 @@
     </div>
     <div id="map" style="height: 450px; width: 800px; margin: 100px auto;  display: inline-block;"></div>
     <div class="dropdown" style=" float: right;margin: 100px auto ; width:100px">
-
-        <ul class="list-group" id="list-useri">
-            <p id="useri"></p>
+        <ul>
+            <li class="list-group" id="list-useri">
+                <p id="useri"></p>
+            </li>
         </ul>
     </div>
     <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>
@@ -122,7 +123,7 @@
             $('<span>').attr('class', 'glyphicon glyphicon-ok-circle').append(
                 $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
 
-            div.append($('<p>' + user.UserName + '</p>'));
+            //div.append($('<p>' + user.UserName + '</p>'));
         });
 
     };
