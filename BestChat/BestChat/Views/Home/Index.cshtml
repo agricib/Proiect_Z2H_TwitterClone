@@ -112,35 +112,32 @@
         $('#onlineUsers').empty();
         var div = $('#onlineUsers');
         users.forEach(function (user) {
-            if (user.Online===true) {
+            if (user.Online === true) {
                 console.log(user);
                 addMarker(user);
                 var time = (new Date).getTime() - user.PositionDate;
-                $('#list-useri').append(
-                $('<li>').append(
-                $('<span>').attr('class', 'glyphicon glyphicon-ok-circle').append(
-                    $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
+                var us = '<li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> ' + user.UserName +'</button></li>';
+                $('#list-useri').append(us);
+
+
             }
             else {
                 var time = (new Date).getTime() - user.PositionDate;
-                $('#list-useri').append(
-                $('<li>').append(
-                $('<span>').attr('class', 'glyphicon glyphicon-remove-circle').append(
-                    $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
-
+                var us = '<li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> ' + user.UserName + '</button></li>';
+                $('#list-useri').append(us);
             }
-              });
+        });
 
     };
 
-   
+
     var onlineusers = [];
     $.get("/api/User").done(function (users) {
-         onlineusers = users;
+        onlineusers = users;
         showusers(users);
 
     });
-   
+
     $("#buton-SearchUser").on("click", function () {
         var username = $("#input-SearchUser").val();
         var findedusers = [];
