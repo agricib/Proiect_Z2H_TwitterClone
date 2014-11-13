@@ -4,7 +4,8 @@
 
 @*<script src="~/Scripts/jquery-2.1.1.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>*@
-
+<script src="~/Scripts/jquery.signalR-2.1.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
 
 <div class="container" style="width: 100%; margin: 50px auto; ">
     <div class="row" style="width:100%;">
@@ -40,13 +41,10 @@
                 <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
             </ul>
         </div>
-        
+        <div class="container">
+            <ul id="discussion"></ul>
+        </div>
     </div>
-    <a href="#" class="list-group-item">
-
-        <button class="btn btn-info" type="button" id="SendM">GO</button>
-        <input type="text" class="form-control" placeholder="Send M" id="InputM">
-    </a>
 </div>
 
 
@@ -71,7 +69,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" >Send message</button>
+                <button type="button" class="btn btn-primary" id="SendMessagebtn">Send message</button>
             </div>
         </div>
     </div>
@@ -81,7 +79,7 @@
 
 
 <script>
-
+    var chat = $.connection.chatHub;
     var markers = new Array();
     var map;
     var onlineusers = [];
@@ -121,10 +119,10 @@
 
             var users = [];
             var bounds = map.getBounds();
-            var west = bounds.getWest() - 0.05;
-            var south = bounds.getSouth() - 0.05;
-            var east = bounds.getEast() - 0.05;
-            var north = bounds.getNorth() - 0.05;
+            var west = bounds.getWest();
+            var south = bounds.getSouth();
+            var east = bounds.getEast();
+            var north = bounds.getNorth();
 
             onlineusers = [];
             $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
@@ -212,6 +210,7 @@
         });
         moveuser(findedusers);
     });
+  
 
     function showModal(userName) {
         $('.btnuser').on('show.bs.modal', function () {
@@ -220,5 +219,29 @@
         $('.btnuser').modal();
 
     }
+    $(function () {
+        
+        var chat = $.connection.chatHub;
+        
+        chat.client.broadcastMessage = function (name, message) {
+           
+            var encodedName = $('<div />').text(name).html();
+            var encodedMsg = $('<div />').text(message).html();
+             
+            $('#discussion').append('<li><strong>' + encodedName
+                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+        };
+       
+        $('#message-text').focus();
+        
+        $.connection.hub.start().done(function () {
+            $('#SendMessagebtn').click(function () {
+               
+                chat.server.send($('#recipient-name').val(), $('#message-text').val());
+               
+                $('#message-text').val('').focus();
+            });
+        });
+    });
  
 </script>

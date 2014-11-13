@@ -17,5 +17,7 @@ namespace BestChat.Controllers
                return context.UserSet.ToList();   
             }
         }
+       
     }
+    
 }

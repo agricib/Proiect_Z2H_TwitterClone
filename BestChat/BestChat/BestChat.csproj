@@ -199,10 +199,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Chat.cs" />
     <Compile Include="ChatHub.cs" />
+    <Compile Include="ConectionMapping.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="ApiControllers\UserController.cs" />
+    <Compile Include="CustomUserIdProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

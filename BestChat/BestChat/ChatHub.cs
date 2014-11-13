@@ -1,26 +1,14 @@
-﻿using Microsoft.AspNet.SignalR;
-using System;
-using System.Threading.Tasks;
-
-namespace BestChat
+﻿using System;
+using System.Web;
+using Microsoft.AspNet.SignalR;
+namespace SignalRChat
 {
-    [Authorize]
     public class ChatHub : Hub
     {
-        public void SendChatMessage(string who, string message)
+        public void Send(string name, string message)
         {
-            string name = Context.User.Identity.Name;
-
-            Clients.Group(who).addChatMessage(name + ": " + message);
-        }
-
-        public override Task OnConnected()
-        {
-            string name = Context.User.Identity.Name;
-
-            Groups.Add(Context.ConnectionId, name);
-
-            return base.OnConnected();
+            
+            Clients.All.broadcastMessage(name, message);
         }
     }
 }
