@@ -58,8 +58,8 @@
         console.log('Data recived');
         var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
         markers.push(marker);
-        marker.addTo(map).bindPopup(user.UserName).openPopup();;
-       // map.setView([user.Latitude, user.Longitude]);
+        marker.addTo(map).bindPopup(user.UserName).openPopup();
+       
     }
 
     $(document).ready(function () {
@@ -120,6 +120,17 @@
 
 
 <script>
+    var moveuser = function (users) {
+        $('#onlineUsers').empty();
+
+        users.forEach(function (user) {
+           
+            map.setView([user.Latitude, user.Longitude],13);
+            
+            
+        });
+
+    };
     var showusers = function (users) {
         $('#onlineUsers').empty();
         var div = $('#onlineUsers');
@@ -159,6 +170,6 @@
             }
 
         });
-        showusers(findedusers);
+        moveuser(findedusers);
     });
 </script>
