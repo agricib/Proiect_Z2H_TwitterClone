@@ -11,63 +11,63 @@
         <div class="col-md-3">
             <div class="list-group input-group-sm">
 
-        <a href="#" class="list-group-item disabled">
-            Search
-        </a>
-        <a href="#" class="list-group-item">
+                <a href="#" class="list-group-item disabled">
+                    Search
+                </a>
+                <a href="#" class="list-group-item">
 
-            <button class="btn btn-success" type="button">GO</button>
-            <input type="text" class="form-control" placeholder="Search Location">
+                    <button class="btn btn-success" type="button">GO</button>
+                    <input type="text" class="form-control" placeholder="Search Location">
 
-        </a>
-        <a href="#" class="list-group-item">
+                </a>
+                <a href="#" class="list-group-item">
 
-            <button class="btn btn-warning" type="button" id="buton-SearchUser">GO</button>
-            <input type="text" class="form-control" placeholder="Search User" id="input-SearchUser">
+                    <button class="btn btn-warning" type="button" id="buton-SearchUser">GO</button>
+                    <input type="text" class="form-control" placeholder="Search User" id="input-SearchUser">
 
-        </a>
-        <a href="#" class="list-group-item">
+                </a>
+                <a href="#" class="list-group-item">
 
-            <button class="btn btn-info" type="button">GO</button>
-            <input type="text" class="form-control" placeholder="Search Post">
-        </a>
-    </div>
+                    <button class="btn btn-info" type="button">GO</button>
+                    <input type="text" class="form-control" placeholder="Search Post">
+                </a>
+            </div>
         </div>
         <div class="col-md-7" id="map" style="height:450px"></div>
         <div class="col-md-2">
 
             <ul class="list-group">
                 <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
-        </ul>
+            </ul>
+        </div>
     </div>
-    </div>
-    
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">User Name:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
             </div>
         </div>
     </div>
+</div>
 
 
 
@@ -83,7 +83,7 @@
         var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
         markers.push(marker);
         marker.addTo(map).bindPopup(user.UserName).openPopup();
-       
+
     }
 
     $(document).ready(function () {
@@ -92,31 +92,31 @@
         layer.addTo(map);
 
         var onClick = function (e) {
-           
+
             for (var i = 0; i < markers.length; i++) {
                 map.removeLayer(markers[i]);
             }
-           
+
             var users = [];
             var bounds = map.getBounds();
             var west = bounds.getWest();
             var south = bounds.getSouth();
             var east = bounds.getEast();
             var north = bounds.getNorth();
-           
+
             $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
                 if (users === null) {
-                    
+
                 }
                 else {
                     users.forEach(function (user) {
 
                         addMarker(user);
-                       
+
                     });
                 }
             });
-            
+
 
         }
         map.on('dragend', onClick);
@@ -148,10 +148,10 @@
         $('#onlineUsers').empty();
 
         users.forEach(function (user) {
-           
-            map.setView([user.Latitude, user.Longitude],13);
-            
-            
+
+            map.setView([user.Latitude, user.Longitude], 13);
+
+
         });
 
     };
@@ -160,11 +160,12 @@
         var div = $('#onlineUsers');
         users.forEach(function (user) {
             if (user.Online === true) {
-            console.log(user);
-            addMarker(user);
-            var time = (new Date).getTime() - user.PositionDate;
-                var us = '<li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> ' + user.UserName +'</button></li>';
-                $('#list-useri').append(us);
+                console.log(user);
+                addMarker(user);
+                var time = (new Date).getTime() - user.PositionDate;
+                var use = '<li><button type="button" class="btn btn-group-vertical" data-toggle="modal" data-target="#exampleModal" style="width:150px;border: 1px solid #999;"> '
+                    + user.UserName + '</button></li>';
+                $('#list-useri').append(use);
 
 
             }
@@ -178,14 +179,14 @@
 
     };
 
-   
+
     var onlineusers = [];
     $.get("/api/User").done(function (users) {
         onlineusers = users;
         showusers(users);
 
     });
-   
+
     $("#buton-SearchUser").on("click", function () {
         var username = $("#input-SearchUser").val();
         var findedusers = [];
