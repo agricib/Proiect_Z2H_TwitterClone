@@ -79,9 +79,24 @@
     var markers = new Array();
     var map;
     var onlineusers = [];
-    function addMarker(user) {
+    var greenIcon = L.icon({
+        iconUrl: '/img/marker-icon-red.png',
+        
+
+        iconSize: [25, 40], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    function addMarker(user,OnOff) {
         console.log('Data recived');
-        var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
+        if (OnOff) {
+            var marker = L.marker([user.Latitude, user.Longitude], { draggable: false});
+        }
+        else {
+            var marker = L.marker([user.Latitude, user.Longitude], { draggable: false, icon: greenIcon });
+        }
         markers.push(marker);
         marker.addTo(map).bindPopup(user.UserName);
 
@@ -109,16 +124,7 @@
             $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
                 onlineusers = users;
                 showusers(users);
-                if (users === null) {
-
-                }
-                else {
-                    users.forEach(function (user) {
-
-                        addMarker(user);
-
-                    });
-                }
+                
 
             });
 
@@ -168,7 +174,7 @@
         users.forEach(function (user) {
             if (user.Online === true) {
                 console.log(user);
-                addMarker(user);
+                addMarker(user,true);
                 var time = (new Date).getTime() - user.PositionDate;
                 var use = '<li><button type="button" class="btn btn-group-vertical" data-toggle="modal" data-target="#exampleModal" style="width:150px;border: 1px solid #999;"> '
                     + user.UserName + '</button></li>';
@@ -177,6 +183,7 @@
 
             }
             else {
+                addMarker(user, false);
                 var time = (new Date).getTime() - user.PositionDate;
                 var us = '<li><button type="button" class="btn btn-group-vertical btn-danger" data-toggle="modal" data-target="#exampleModal" style="width:150px;border: 1px solid #999;"> '
                     + user.UserName + '</button></li>';
