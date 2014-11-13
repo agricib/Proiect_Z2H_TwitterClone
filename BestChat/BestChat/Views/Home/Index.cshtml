@@ -2,8 +2,8 @@
     ViewBag.Title = "Home Page";
 }
 
-<script src="~/Scripts/jquery-2.1.1.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
+@*<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>*@
 
 
 <div class="container" style="width: 100%; margin: 50px auto; ">
@@ -48,7 +48,9 @@
         <input type="text" class="form-control" placeholder="Send M" id="InputM">
     </a>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+<div class="modal fade btnuser" id="BestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -74,8 +76,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 
@@ -160,10 +160,10 @@
         }
 
     });
-</script>
 
 
-<script>
+
+
     var moveuser = function (users) {
         $('#onlineUsers').empty();
 
@@ -184,7 +184,7 @@
                 console.log(user);
                 addMarker(user,true);
                 var time = (new Date).getTime() - user.PositionDate;
-                var use = '<li><button type="button" class="btn btn-group-vertical" data-toggle="modal" data-target="#exampleModal" style="width:150px;border: 1px solid #999;"> '
+                var use = '<li><button type="button" class="btn btn-group-vertical" onClick="showModal(\''+ user.UserName +'\')" style="width:150px;border: 1px solid #999;"> '
                     + user.UserName + '</button></li>';
                 $('#list-useri').append(use);
 
@@ -193,16 +193,13 @@
             else {
                 addMarker(user, false);
                 var time = (new Date).getTime() - user.PositionDate;
-                var us = '<li><button type="button" class="btn btn-group-vertical btn-danger" data-toggle="modal" data-target="#exampleModal" style="width:150px;border: 1px solid #999;"> '
+                var us = '<li><button type="button" class="btn btn-group-vertical btn-danger" data-toggle="modal"  style="width:150px;border: 1px solid #999;"> '
                     + user.UserName + '</button></li>';
                 $('#list-useri').append(us);
             }
         });
 
     };
-
-
-
 
     $("#buton-SearchUser").on("click", function () {
         var username = $("#input-SearchUser").val();
@@ -215,8 +212,13 @@
         });
         moveuser(findedusers);
     });
-    $("#SendM").on("click", function () {
 
-        alert("Addsjh");
-    });
+    function showModal(userName) {
+        $('.btnuser').on('show.bs.modal', function () {
+            $('#recipient-name').val(userName);
+        })
+        $('.btnuser').modal();
+
+    }
+ 
 </script>
