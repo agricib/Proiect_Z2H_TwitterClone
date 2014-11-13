@@ -55,7 +55,7 @@
         var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
         markers.push(marker);
         marker.addTo(map).bindPopup(user.UserName).openPopup();;
-        map.setView([user.Latitude, user.Longitude]);
+       // map.setView([user.Latitude, user.Longitude]);
     }
 
     $(document).ready(function () {
