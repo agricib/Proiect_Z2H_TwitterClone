@@ -41,7 +41,7 @@
                 </li>
         </ul>
     </div>
-</div>
+    </div>
 </div>
 
 
@@ -59,7 +59,7 @@
         var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
         markers.push(marker);
         marker.addTo(map).bindPopup(user.UserName).openPopup();;
-        map.setView([user.Latitude, user.Longitude]);
+       // map.setView([user.Latitude, user.Longitude]);
     }
 
     $(document).ready(function () {
@@ -125,9 +125,9 @@
         var div = $('#onlineUsers');
         users.forEach(function (user) {
             if (user.Online === true) {
-                console.log(user);
-                addMarker(user);
-                var time = (new Date).getTime() - user.PositionDate;
+            console.log(user);
+            addMarker(user);
+            var time = (new Date).getTime() - user.PositionDate;
                 var us = '<li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> ' + user.UserName +'</button></li>';
                 $('#list-useri').append(us);
 
@@ -138,14 +138,14 @@
                 var us = '<li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> ' + user.UserName + '</button></li>';
                 $('#list-useri').append(us);
             }
-              });
+        });
 
     };
 
    
     var onlineusers = [];
     $.get("/api/User").done(function (users) {
-         onlineusers = users;
+        onlineusers = users;
         showusers(users);
 
     });
