@@ -6,8 +6,10 @@
 <script src="~/Scripts/bootstrap.min.js"></script>
 
 
-<div style=" margin-left: -10px;text-align:center;">
-    <div class="list-group" style=" float: left; margin: 100px auto; width=100">
+<div class="container" style="width: 100%; margin: 50px auto; ">
+    <div class="row" style="width:100%;">
+        <div class="col-md-3">
+            <div class="list-group input-group-sm">
 
         <a href="#" class="list-group-item disabled">
             Search
@@ -16,8 +18,6 @@
 
             <button class="btn btn-success" type="button">GO</button>
             <input type="text" class="form-control" placeholder="Search Location">
-
-
 
         </a>
         <a href="#" class="list-group-item">
@@ -30,21 +30,25 @@
 
             <button class="btn btn-info" type="button">GO</button>
             <input type="text" class="form-control" placeholder="Search Post">
-
-
         </a>
-
-
     </div>
-    <div id="map" style="height: 450px; width: 800px; margin: 100px auto;  display: inline-block;"></div>
-    <div class="dropdown" style=" float: right;margin: 100px auto ; width:100px">
+        </div>
+        <div class="col-md-7" id="map" style="height:450px"></div>
+        <div class="col-md-2">
 
-        <ul class="list-group" id="list-useri">
-            <p id="useri"></p>
+            <ul class="list-group">
+                <li class="list-group-item" id="list-useri" style="list-style:none">
+                </li>
         </ul>
     </div>
-    <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>
+    </div>
 </div>
+
+
+
+
+
+
 
 <script>
 
@@ -121,13 +125,13 @@
         var div = $('#onlineUsers');
         users.forEach(function (user) {
             if (user.Online===true) {
-                console.log(user);
-                addMarker(user);
-                var time = (new Date).getTime() - user.PositionDate;
-                $('#list-useri').append(
+            console.log(user);
+            addMarker(user);
+            var time = (new Date).getTime() - user.PositionDate;
+            $('#list-useri').append(
                 $('<li>').append(
-                $('<span>').attr('class', 'glyphicon glyphicon-ok-circle').append(
-                    $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
+            $('<span>').attr('class', 'glyphicon glyphicon-ok-circle').append(
+                $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
             }
             else {
                 var time = (new Date).getTime() - user.PositionDate;
@@ -136,15 +140,15 @@
                 $('<span>').attr('class', 'glyphicon glyphicon-remove-circle').append(
                     $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
 
-            }
-              });
+            div.append($('<p>' + user.UserName + '</p>'));
+        });
 
     };
 
    
     var onlineusers = [];
     $.get("/api/User").done(function (users) {
-         onlineusers = users;
+        onlineusers = users;
         showusers(users);
 
     });

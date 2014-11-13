@@ -1408,7 +1408,7 @@ pre code {
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1170px;
+    width: 100%;
   }
 }
 .container-fluid {
@@ -2351,8 +2351,9 @@ output {
   color: #555;
 }
 .form-control {
+    float:left;
   display: block;
-  width: 100%;
+  width: 80%;
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
