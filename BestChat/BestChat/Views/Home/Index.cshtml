@@ -6,8 +6,10 @@
 <script src="~/Scripts/bootstrap.min.js"></script>
 
 
-<div style=" margin-left: -10px;text-align:center;">
-    <div class="list-group" style=" float: left; margin: 100px auto; width=100">
+<div class="container" style="width: 100%; margin: 50px auto; ">
+    <div class="row" style="width:100%;">
+        <div class="col-md-3">
+            <div class="list-group input-group-sm">
 
         <a href="#" class="list-group-item disabled">
             Search
@@ -16,8 +18,6 @@
 
             <button class="btn btn-success" type="button">GO</button>
             <input type="text" class="form-control" placeholder="Search Location">
-
-
 
         </a>
         <a href="#" class="list-group-item">
@@ -30,29 +30,34 @@
 
             <button class="btn btn-info" type="button">GO</button>
             <input type="text" class="form-control" placeholder="Search Post">
-
-
         </a>
-
-
     </div>
-    <div id="map" style="height: 450px; width: 800px; margin: 100px auto;  display: inline-block;"></div>
-    <div class="dropdown" style=" float: right;margin: 100px auto ; width:100px">
+        </div>
+        <div class="col-md-7" id="map" style="height:450px"></div>
+        <div class="col-md-2">
 
-        <ul class="list-group" id="list-useri">
-            <p id="useri"></p>
+            <ul class="list-group">
+                <li class="list-group-item" id="list-useri" style="list-style:none">
+                </li>
         </ul>
     </div>
-    <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>
 </div>
+</div>
+
+
+
+
+
+
 
 <script>
 
-
+    var markers=new Array();
     var map;
     function addMarker(user) {
         console.log('Data recived');
         var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
+        markers.push(marker);
         marker.addTo(map).bindPopup(user.UserName).openPopup();;
         map.setView([user.Latitude, user.Longitude]);
     }
@@ -63,28 +68,35 @@
         layer.addTo(map);
 
         var onClick = function (e) {
-            var users = [];
+           
+            for (var i=0;i<markers.length;i++){
+                map.removeLayer(markers[i]);
+            }
+           
+            var users=[];
             var bounds = map.getBounds();
-            var westt = bounds.getWest();
-            var southt = bounds.getSouth();
-            var eastt = bounds.getEast();
-            var northt = bounds.getNorth();
-            $.get("/api/UserPosition", { east: eastt, vest: westt, north: northt, south: southt }).done(function (users) {
-                if (users = null) {
-                    console.log("Nu am mai primit!");
+            var west = bounds.getWest();
+            var south = bounds.getSouth();
+            var east = bounds.getEast();
+            var north = bounds.getNorth();
+           
+            $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
+                if (users === null) {
+                    
                 }
                 else {
                     users.forEach(function (user) {
 
                         addMarker(user);
-                        console.log("am primit" + users);
+                       
                     });
                 }
             });
             
 
         }
-        map.on('drag', onClick);
+        map.on('dragend', onClick);
+        map.on('zoomend', onClick);
 
     });
     $(document).ready(function () {
@@ -126,18 +138,18 @@
                 var us = '<li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> ' + user.UserName + '</button></li>';
                 $('#list-useri').append(us);
             }
-        });
+              });
 
     };
 
-
+   
     var onlineusers = [];
     $.get("/api/User").done(function (users) {
-        onlineusers = users;
+         onlineusers = users;
         showusers(users);
 
     });
-
+   
     $("#buton-SearchUser").on("click", function () {
         var username = $("#input-SearchUser").val();
         var findedusers = [];
