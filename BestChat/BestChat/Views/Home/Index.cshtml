@@ -44,7 +44,7 @@
 </div>
 
 
-<div class="modal fade btnuser" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade btnuser" id="BestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -178,7 +178,7 @@
                 console.log(user);
                 addMarker(user,true);
                 var time = (new Date).getTime() - user.PositionDate;
-                var use = '<li><button type="button" class="btn btn-group-vertical" data-toggle="modal" data-target=".btnuser" style="width:150px;border: 1px solid #999;"> '
+                var use = '<li><button type="button" class="btn btn-group-vertical" onClick="showModal(\''+ user.UserName +'\')" style="width:150px;border: 1px solid #999;"> '
                     + user.UserName + '</button></li>';
                 $('#list-useri').append(use);
 
@@ -207,14 +207,12 @@
         moveuser(findedusers);
     });
 
+    function showModal(userName) {
+        $('.btnuser').on('show.bs.modal', function () {
+            $('#recipient-name').val(userName);
+        })
+        $('.btnuser').modal();
 
-    $('#BestModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+    }
+ 
 </script>
