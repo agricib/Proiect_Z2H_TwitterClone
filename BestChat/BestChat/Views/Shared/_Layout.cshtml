@@ -44,14 +44,14 @@
     </div>
 
     <script>
-        //$.connection.hub.start()
-        //.done(function () {
-        //    $.connection.chat.server.registerMe();
+        $.connection.hub.start()
+        .done(function () {
+            $.connection.chat.server.registerMe();
 
-        //})
-        //.fail(function () {
-        //    console.log('Not connected!');
-        //});
+        })
+        .fail(function () {
+            console.log('Not connected!');
+        });
             
     </script>
     @Scripts.Render("~/bundles/bootstrap")

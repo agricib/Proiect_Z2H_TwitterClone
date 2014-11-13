@@ -40,7 +40,13 @@
                 <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
             </ul>
         </div>
+        
     </div>
+    <a href="#" class="list-group-item">
+
+        <button class="btn btn-info" type="button" id="SendM">GO</button>
+        <input type="text" class="form-control" placeholder="Send M" id="InputM">
+    </a>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -63,7 +69,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="button" class="btn btn-primary" >Send message</button>
             </div>
         </div>
     </div>
@@ -115,10 +121,10 @@
 
             var users = [];
             var bounds = map.getBounds();
-            var west = bounds.getWest();
-            var south = bounds.getSouth();
-            var east = bounds.getEast();
-            var north = bounds.getNorth();
+            var west = bounds.getWest() - 0.05;
+            var south = bounds.getSouth() - 0.05;
+            var east = bounds.getEast() - 0.05;
+            var north = bounds.getNorth() - 0.05;
 
             onlineusers = [];
             $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
@@ -208,5 +214,9 @@
 
         });
         moveuser(findedusers);
+    });
+    $("#SendM").on("click", function () {
+
+        alert("Addsjh");
     });
 </script>
