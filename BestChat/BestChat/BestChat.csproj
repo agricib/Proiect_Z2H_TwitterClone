@@ -232,6 +232,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="img\alpha.jpeg" />
+    <Content Include="img\images.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
@@ -287,6 +289,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Map\" />
+    <Folder Include="Views\SearchCoordonate\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

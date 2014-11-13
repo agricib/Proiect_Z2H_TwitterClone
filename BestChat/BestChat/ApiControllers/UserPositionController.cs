@@ -13,9 +13,15 @@ namespace BestChat.ApiControllers
     public class UserPositionController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        public IEnumerable<UserInfo> Get(double east, double vest, double north, double south)
         {
-            return new string[] { "value1", "value2" };
+
+            using (var context = new UserContext())
+            {
+                return context.UserSet.Where(b => b.Latitude >south && b.Latitude<north && b.Latitude>vest && b.Latitude<east).ToList(); 
+
+            }
+           
         }
 
         // GET api/<controller>/5

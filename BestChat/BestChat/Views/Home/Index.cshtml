@@ -2,13 +2,57 @@
     ViewBag.Title = "Home Page";
 }
 
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 
-<div id="map" style="height: 450px;width: 800px;margin:100px auto"></div>
+
+<div style=" margin-left: -10px;text-align:center;">
+    <div class="list-group" style=" float: left; margin: 100px auto; width=100">
+
+        <a href="#" class="list-group-item disabled">
+            Search
+        </a>
+        <a href="#" class="list-group-item">
+
+            <button class="btn btn-success" type="button">GO</button>
+            <input type="text" class="form-control" placeholder="Search Location">
+
+
+
+        </a>
+        <a href="#" class="list-group-item">
+
+            <button class="btn btn-warning" type="button" id="buton-SearchUser">GO</button>
+            <input type="text" class="form-control" placeholder="Search User" id="input-SearchUser">
+
+        </a>
+        <a href="#" class="list-group-item">
+
+            <button class="btn btn-info" type="button">GO</button>
+            <input type="text" class="form-control" placeholder="Search Post">
+
+
+        </a>
+
+
+    </div>
+    <div id="map" style="height: 450px; width: 800px; margin: 100px auto;  display: inline-block;"></div>
+    <div class="dropdown" style=" float: right;margin: 100px auto ; width:100px">
+
+        <ul class="list-group" id="list-useri">
+            <p id="useri"></p>
+        </ul>
+    </div>
+    <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>
+</div>
+
 <script>
+
+
     var map;
     function addMarker(user) {
         console.log('Data recived');
-        var marker = L.marker([user.Latitude,user.Longitude], { draggable: true });
+        var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
         marker.addTo(map).bindPopup(user.UserName).openPopup();;
         map.setView([user.Latitude, user.Longitude]);
     }
@@ -17,44 +61,72 @@
         map = L.map('map').setView([44.5, 26], 10);
         var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
         layer.addTo(map);
-      
-        
-        
+
+        var onClick = function (e) {
+            var users = [];
+            var bounds = map.getBounds();
+            var westt = bounds.getWest();
+            var southt = bounds.getSouth();
+            var eastt = bounds.getEast();
+            var northt = bounds.getNorth();
+            $.get("/api/UserPosition", { east: eastt, vest: westt, north: northt, south: southt }).done(function (users) {
+                if (users = null) {
+                    console.log("Nu am mai primit!");
+                }
+                else {
+                    users.forEach(function (user) {
+
+                        addMarker(user);
+                        console.log("am primit" + users);
+                    });
+                }
+            });
+            
+
+        }
+        map.on('drag', onClick);
+
     });
     $(document).ready(function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(SendPosition);
         }
         else {
-            alert( "Geolocation is not supported by this browser.");
+            alert("Geolocation is not supported by this browser.");
         }
         function SendPosition(position) {
-           // addMarker(position.coords.latitude, position.coords.longitude);
-         
+            // addMarker(position.coords.latitude, position.coords.longitude);
+
             $.post("/api/UserPosition", { Latitude: position.coords.latitude, Longitude: position.coords.longitude })
-            .done(function (data) {               
+            .done(function (data) {
             });
-           
+
         }
 
     });
 </script>
 
 <div id="onlineUsers">
-    
+
 </div>
 <script>
     var showusers = function (users) {
         $('#onlineUsers').empty();
         var div = $('#onlineUsers');
         users.forEach(function (user) {
-            console.log(user);         
+            console.log(user);
             addMarker(user);
+            var time = (new Date).getTime() - user.PositionDate;
+            $('#list-useri').append(
+                $('<li>').append(
+            $('<span>').attr('class', 'glyphicon glyphicon-ok-circle').append(
+                $('<span>').attr('class', '<span class="badge">').append(time).append(user.UserName))));
+
             div.append($('<p>' + user.UserName + '</p>'));
         });
 
     };
-    var onlineusers=[];
+    var onlineusers = [];
     $.get("/api/User").done(function (users) {
         onlineusers = users;
         showusers(users);
