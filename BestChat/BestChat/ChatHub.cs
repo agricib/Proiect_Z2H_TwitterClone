@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using DataModels;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BestChat
 {
@@ -21,5 +23,38 @@ namespace BestChat
 
             return base.OnConnected();
         }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            var name = Context.User.Identity.Name;
+            using (var context = new UserContext())
+            {
+                var user  = context.UserSet
+                     .SingleOrDefault(b => b.UserName == name);
+                user.Online = false;
+                context.SaveChanges(); 
+            }
+            
+
+            Groups.Remove(Context.ConnectionId, name);
+            
+            return base.OnDisconnected(stopCalled);
+        }
+        public override Task OnReconnected()
+        {
+            var name = Context.User.Identity.Name;
+            using (var context = new UserContext())
+            {
+                var user = context.UserSet
+                     .SingleOrDefault(b => b.UserName == name);
+                user.Online = true;
+                context.SaveChanges();
+
+            }
+            Groups.Add(Context.ConnectionId, name);
+            return base.OnReconnected();
+           
+        }
+
     }
 }
