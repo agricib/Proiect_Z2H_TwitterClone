@@ -45,9 +45,9 @@
             </ul>*@
 
         </div>
-        <div class="container">
+        @*<div class="container">
             <ul id="discussion"></ul>
-        </div>
+        </div>*@
     </div>
 </div>
 
@@ -76,6 +76,9 @@
                 <button type="button" id="myButton" data-loading-text="Loading..." class="btn btn-primary">
                     Send message
                 </button>
+            </div>
+            <div class="container">
+                <ul id="discussion"></ul>
             </div>
         </div>
     </div>
@@ -237,10 +240,10 @@
             $(function () {
 
                 var chat = $.connection.chatHub;
-                chat.client.addNewMessageToPage = function (name, message) {
+                chat.client.addNewMessageToPage = function (message) {
                     
                     $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                    + '</strong> ' + htmlEncode(message) + '</li>');
                 };
 
                 $('#message-text').focus();
@@ -249,7 +252,7 @@
                     $('#myButton').click(function () {
                         
                         chat.server.send($('#recipient-name').val(), $('#message-text').val());
-                        $('#discussion').append('<li><strong>Me</strong>: ' + htmlEncode($('#message-text').val()) + '</li>');
+                        $('#discussion').append('<li><strong>Me</strong>' + htmlEncode($('#message-text').val()) + '</li>');
 
                         $('#message-text').val('').focus();
                     });
