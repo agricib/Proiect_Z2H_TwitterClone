@@ -9,9 +9,9 @@ namespace User.Entities
 {
     public class Message : BaseEntity<int>
     {
-        public UserInfo Sender { get; set; }
+        public string Sender { get; set; }
 
-        public UserInfo Receiver { get; set; }
+        public string Receiver { get; set; }
 
         public double Latitude { get; set; }
 
