@@ -212,7 +212,7 @@
 
 
     var showChat = function (user) {
-        if ($('#' + user + 'tab').length === 0) {
+        if ($('#' + user + '-tab').length === 0) {
             var tab = '<li role="presentation"><a href="#' + user + 'panel" id="' + user + '-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"</a>' + user + '</li>';
             var chats = ' <div role="tabpanel" class="tab-pane" id="' + user + 'panel" aria-labelledby="' + user + '-tab" style="height:250px"></div>'
             $('#myTab').append(tab);
@@ -221,7 +221,7 @@
            
         }
 
-        $('#' + user + 'tab').click();
+        $('#' + user + '-tab').click();
         $("#SendMessege").show();
     };
 
