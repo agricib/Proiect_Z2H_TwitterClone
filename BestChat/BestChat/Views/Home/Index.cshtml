@@ -31,7 +31,7 @@
                         </a>
                     </h4>
                 </div>
-                    <div id="collapseOne" class="panel-collapse collapse active"  role="tabpanel" aria-labelledby="headingOne">
+                <div id="collapseOne" class="panel-collapse collapse active" role="tabpanel" aria-labelledby="headingOne">
                         <div class="list-group">
                             <ul class="list-group">
                                 <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
@@ -40,10 +40,6 @@
                     </div>
                 </div>
             </div>
-            @*<ul class="list-group">
-                <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
-            </ul>*@
-
         </div>
         @*<div class="container">
             <ul id="discussion"></ul>
@@ -217,17 +213,19 @@
 
             };
 
-            $("#buton-SearchUser").on("click", function () {
+    $("#buton-SearchUser").on("click",function searchUser () {
                 var username = $("#input-SearchUser").val();
                 var findedusers = [];
-                onlineusers.forEach(function (user) {
+        onlineusers.forEach(function  (user) {
                     if (user.UserName.indexOf(username) > -1) {
                         findedusers.push(user);
                     }
 
                 });
+
                 moveuser(findedusers);
             });
+
 
 
             function showModal(userName) {
