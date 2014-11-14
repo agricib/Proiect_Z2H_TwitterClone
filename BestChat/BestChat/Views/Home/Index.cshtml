@@ -26,7 +26,9 @@
             <div class="bs-example bs-example-tabs" role="tabpanel">
                 <ul id="myTab" class="nav nav-tabs" role="tablist"></ul>
                 <div id="myTabContent" class="tab-content">
-                    <div id="SendMessege" style="display:none"><input type="text" class="form-control SendMessege" placeholder="Send Messege" style="width:75%;"><button class="btn btn-info SendMessege" type="button">Send</button></div>
+                    <div id="SendMessege" style="display:none">
+                        <input type="text" class="form-control SendMessege" placeholder="Send Messege" id="message-text" style="width:75%;">
+                        <button class="btn btn-info SendMessege" id="myButton" type="button">Send</button></div>
                 </div>
             </div>
         </div>
@@ -51,6 +53,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="hi1" />
     <div class="container">
         <ul id="discussion"></ul>
     </div>
@@ -189,7 +192,8 @@
 
             }
         });
-
+       
+       
     };
 
     $("#buton-SearchUser").on("click", function searchUser() {
@@ -216,18 +220,21 @@
             var chats = ' <div role="tabpanel" class="tab-pane fade in active" id="' + user + 'panel" aria-labelledby="' + user + '"></div>'
             $('#myTab').append(tab);
             $('#myTabContent').append(chats);
-
+            $("#myTab a").click(function (event) {
+               var x=$(event.target).text();
+               $("#hi1").val(x);
+               //alert($("#hi1").val());
+            });
            
         }
 
         $('#' + user + 'tab').click();
         $("#SendMessege").show();
     };
-
-
-
+    
     $(function () {
-
+        
+        
         var chat = $.connection.chatHub;
         chat.client.addNewMessageToPage = function (message) {
 
@@ -236,11 +243,10 @@
         };
 
         $('#message-text').focus();
-
+        
         $.connection.hub.start().done(function () {
             $('#myButton').click(function () {
-
-                chat.server.send($('#recipient-name').val(), $('#message-text').val());
+                chat.server.send($('#hi1').val(), $('#message-text').val());
                 $('#discussion').append('<li><strong>Me</strong>' + htmlEncode($('#message-text').val()) + '</li>');
 
                 $('#message-text').val('').focus();
