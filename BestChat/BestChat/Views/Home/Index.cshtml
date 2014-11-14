@@ -23,24 +23,13 @@
                
                 </div>
             
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        RECENT CHAT HISTORY
-                    </div>
-                    <div class="panel-body">
-                    <ul class="nav nav-tabs small" id="tabs"></ul>
-                    <ul class="media-list" id="chatMess"></ul>
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Enter Message">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-info" type="button">SEND</button>
-                                </span>
-            </div>
+            <div class="bs-example bs-example-tabs" role="tabpanel">
+                <ul id="myTab" class="nav nav-tabs" role="tablist"></ul>
+                <div id="myTabContent" class="tab-content">
+                    <div id="SendMessege" style="display:none"><input type="text" class="form-control SendMessege" placeholder="Send Messege" style ="width:75%;"><button class="btn btn-info SendMessege" type="button">Send</button></div>
         </div>
                     </div>
                 </div>
-            </div>
       
         <div class="col-md-7" id="map" style="height:450px"></div>
         <div class="col-md-2">
@@ -66,7 +55,6 @@
             <ul id="discussion"></ul>
             </div>
     </div>
-
 
 
 
@@ -221,11 +209,13 @@
 
 
 
-    var showChat =function (user) {
-        var tab = '<li role="presentation" class="active"><a href="#">' + user + '</a></li>';
-        var chats = '<li class="media"><div class="media-body"><div class="media"><a class="pull-left" href="#"></a><div class="media-body"></div> </div></div></li>'
-        $('#tabs').append(tab);
-        $('#chatMess').append(chats);
+    var showChat = function (user) {
+        var tab = '<li role="presentation" class="active"><a href="#home" id="\'' + user + '\'" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"</a>\'' + user + '\'</li>';
+        var chats = ' <div role="tabpanel" class="tab-pane fade in active" id="\'' + user + '\'" aria-labelledby="home-tab"></div>'
+        $('#myTab').append(tab);
+        $('#myTabContent').append(chats);
+
+        $("#SendMessege").show();
     };
 
 
