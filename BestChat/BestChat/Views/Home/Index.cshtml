@@ -248,27 +248,28 @@
             $(function () {
 
                 var chat = $.connection.chatHub;
-
-                chat.client.broadcastMessage = function (name, message) {
-
-                    var encodedName = $('<div />').text(name).html();
-                    var encodedMsg = $('<div />').text(message).html();
-
-                    $('#discussion').append('<li><strong>' + encodedName
-                        + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+                chat.client.addNewMessageToPage = function (name, message) {
+                    
+                    $('#discussion').append('<li><strong>' + htmlEncode(name)
+                    + '</strong>: ' + htmlEncode(message) + '</li>');
                 };
 
                 $('#message-text').focus();
 
                 $.connection.hub.start().done(function () {
-                    $('#SendMessagebtn').click(function () {
-
+                    $('#myButton').click(function () {
+                        
                         chat.server.send($('#recipient-name').val(), $('#message-text').val());
+                        $('#discussion').append('<li><strong>Me</strong>: ' + htmlEncode($('#message-text').val()) + '</li>');
 
                         $('#message-text').val('').focus();
                     });
                 });
             });
+            function htmlEncode(value) {
+                        var encodedValue = $('<div />').text(value).html();
+                        return encodedValue;
+                    }
 
         </script>
 
