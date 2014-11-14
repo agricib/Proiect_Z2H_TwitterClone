@@ -11,14 +11,14 @@
     <div class="row" style="width:100%;">
         <div class="col-md-3">
             <div class="list-group input-group-sm">
-
+                          
                 <a href="#" class="list-group-item">
 
                     <button class="btn btn-info" type="button" id="buton-SearchUser">GO</button>
                     <input type="text" class="form-control" placeholder="Search User" id="input-SearchUser">
 
                 </a>
-
+               
             </div>
         </div>
         <div class="col-md-7" id="map" style="height:450px"></div>
@@ -32,19 +32,19 @@
                     </h4>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse active" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="list-group">
-                        <ul class="list-group">
-                            <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
-                        </ul>
+                        <div class="list-group">
+                            <ul class="list-group">
+                                <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="container">
+            <ul id="discussion"></ul>
+        </div>
     </div>
-    <div class="container">
-        <ul id="discussion"></ul>
-    </div>
-</div>
 </div>
 
 
@@ -81,181 +81,182 @@
 
 
 
-<script>
-    $('#myButton').on('click', function () {
-        var $btn = $(this).button('loading')
-        // business logic...
-        $btn.button('reset')
-    })
-</script>
+        <script>
+            $('#myButton').on('click', function () {
+                var $btn = $(this).button('loading')
+                // business logic...
+                $btn.button('reset')
+            })
+        </script>
 
-<script>
-    var chat = $.connection.chatHub;
-    var markers = new Array();
-    var map;
-    var onlineusers = [];
-    var greenIcon = L.icon({
-        iconUrl: '/img/marker-icon-red.png',
+        <script>
+            var chat = $.connection.chatHub;
+            var markers = new Array();
+            var map;
+            var onlineusers = [];
+            var greenIcon = L.icon({
+                iconUrl: '/img/marker-icon-red.png',
 
 
-        iconSize: [25, 40], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
-    function addMarker(user, OnOff) {
-        console.log('Data recived');
-        if (OnOff) {
-            var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
-        }
-        else {
-            var marker = L.marker([user.Latitude, user.Longitude], { draggable: false, icon: greenIcon });
-        }
-        markers.push(marker);
-        marker.addTo(map).bindPopup(user.UserName);
+                iconSize: [25, 40], // size of the icon
+                shadowSize: [50, 64], // size of the shadow
+                iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+                shadowAnchor: [4, 62],  // the same for the shadow
+                popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+            });
+            function addMarker(user, OnOff) {
+                console.log('Data recived');
+                if (OnOff) {
+                    var marker = L.marker([user.Latitude, user.Longitude], { draggable: false });
+                }
+                else {
+                    var marker = L.marker([user.Latitude, user.Longitude], { draggable: false, icon: greenIcon });
+                }
+                markers.push(marker);
+                marker.addTo(map).bindPopup(user.UserName);
 
-    }
-
-    $(document).ready(function () {
-        map = L.map('map').setView([44.5, 26], 10);
-        var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
-        layer.addTo(map);
-
-        var showMarkerOnMap = function (e) {
-
-            for (var i = 0; i < markers.length; i++) {
-                map.removeLayer(markers[i]);
             }
 
-            var users = [];
-            var bounds = map.getBounds();
-            var west = bounds.getWest();
-            var south = bounds.getSouth();
-            var east = bounds.getEast();
-            var north = bounds.getNorth();
+            $(document).ready(function () {
+                map = L.map('map').setView([44.5, 26], 10);
+                var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+                layer.addTo(map);
 
-            onlineusers = [];
-            $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
-                onlineusers = users;
-                showusers(users);
+                var showMarkerOnMap = function (e) {
 
+                    for (var i = 0; i < markers.length; i++) {
+                        map.removeLayer(markers[i]);
+                    }
+
+                    var users = [];
+                    var bounds = map.getBounds();
+                    var west = bounds.getWest();
+                    var south = bounds.getSouth();
+                    var east = bounds.getEast();
+                    var north = bounds.getNorth();
+
+                    onlineusers = [];
+                    $.get("/api/UserPosition", { east: east, west: west, north: north, south: south }).done(function (users) {
+                        onlineusers = users;
+                        showusers(users);
+
+
+                    });
+
+
+                }
+
+                map.on('dragend', showMarkerOnMap);
+                map.on('zoomend', showMarkerOnMap);
+                map.on('viewreset', showMarkerOnMap);
+                showMarkerOnMap();
+
+            });
+            $(document).ready(function () {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(SendPosition);
+                }
+                else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+                function SendPosition(position) {
+
+
+                    $.post("/api/UserPosition", { Latitude: position.coords.latitude, Longitude: position.coords.longitude })
+                    .done(function (data) {
+                    });
+
+                }
 
             });
 
 
-        }
-
-        map.on('dragend', showMarkerOnMap);
-        map.on('zoomend', showMarkerOnMap);
-        map.on('viewreset', showMarkerOnMap);
-        showMarkerOnMap();
-
-    });
-    $(document).ready(function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(SendPosition);
-        }
-        else {
-            alert("Geolocation is not supported by this browser.");
-        }
-        function SendPosition(position) {
 
 
-            $.post("/api/UserPosition", { Latitude: position.coords.latitude, Longitude: position.coords.longitude })
-            .done(function (data) {
-            });
+            var moveuser = function (users) {
+                $('#onlineUsers').empty();
 
-        }
+                users.forEach(function (user) {
 
-    });
-
+                    map.setView([user.Latitude, user.Longitude], 13);
 
 
+                });
 
-    var moveuser = function (users) {
-        $('#onlineUsers').empty();
+            };
+            var showusers = function (users) {
 
-        users.forEach(function (user) {
-
-            map.setView([user.Latitude, user.Longitude], 13);
-
-
-        });
-
-    };
-    var showusers = function (users) {
-
-        $('#list-useri').empty();
-        var div = $('#list-useri');
-        users.forEach(function (user) {
-            if (user.Online === true) {
-                console.log(user);
-                addMarker(user, true);
-                var time = (new Date).getTime() - user.PositionDate;
-                var use = '<li><button type="button" class="btn btn-group-vertical" onClick="showModal(\'' + user.UserName + '\')" style="width:150px;border: 1px solid #999;"> '
-                    + user.UserName + '</button></li>';
-                $('#list-useri').append(use);
+                $('#list-useri').empty();
+                var div = $('#list-useri');
+                users.forEach(function (user) {
+                    if (user.Online === true) {
+                        console.log(user);
+                        addMarker(user, true);
+                        var time = (new Date).getTime() - user.PositionDate;
+                        var use = '<li><button type="button" class="btn btn-group-vertical" onClick="showModal(\'' + user.UserName + '\')" style="width:150px;border: 1px solid #999;"> '
+                            + user.UserName + '</button></li>';
+                        $('#list-useri').append(use);
 
 
-            }
-            else {
-                addMarker(user, false);
-                var time = (new Date).getTime() - user.PositionDate;
-                var us = '<li><button type="button" class="btn btn-group-vertical btn-danger" data-toggle="modal"  style="width:150px;border: 1px solid #999;"> '
-                    + user.UserName + '</button></li>';
-                $('#list-useri').append(us);
-            }
-        });
+                    }
+                    else {
+                        addMarker(user, false);
+                        var time = (new Date).getTime() - user.PositionDate;
+                        var us = '<li><button type="button" class="btn btn-group-vertical btn-danger" data-toggle="modal"  style="width:150px;border: 1px solid #999;"> '
+                            + user.UserName + '</button></li>';
+                        $('#list-useri').append(us);
+                    }
+                });
 
-    };
+            };
 
     $("#buton-SearchUser").on("click",function searchUser () {
-        var username = $("#input-SearchUser").val();
-        var findedusers = [];
+                var username = $("#input-SearchUser").val();
+                var findedusers = [];
         onlineusers.forEach(function  (user) {
-            if (user.UserName.indexOf(username) > -1) {
-                findedusers.push(user);
-            }
-           
-        });
+                    if (user.UserName.indexOf(username) > -1) {
+                        findedusers.push(user);
+                    }
 
-        moveuser(findedusers);
-    });
-    
-    
+                });
 
-    function showModal(userName) {
-        $('.btnuser').on('show.bs.modal', function () {
-            $('#recipient-name').val(userName);
-        })
-        $('.btnuser').modal();
-
-    }
-    $(function () {
-
-        var chat = $.connection.chatHub;
-
-        chat.client.broadcastMessage = function (name, message) {
-
-            var encodedName = $('<div />').text(name).html();
-            var encodedMsg = $('<div />').text(message).html();
-
-            $('#discussion').append('<li><strong>' + encodedName
-                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
-        };
-
-        $('#message-text').focus();
-
-        $.connection.hub.start().done(function () {
-            $('#SendMessagebtn').click(function () {
-
-                chat.server.send($('#recipient-name').val(), $('#message-text').val());
-
-                $('#message-text').val('').focus();
+                moveuser(findedusers);
             });
-        });
-    });
 
-</script>
+
+
+            function showModal(userName) {
+                $('.btnuser').on('show.bs.modal', function () {
+                    $('#recipient-name').val(userName);
+                })
+                $('.btnuser').modal();
+
+            }
+            $(function () {
+
+                var chat = $.connection.chatHub;
+                chat.client.addNewMessageToPage = function (name, message) {
+
+                    $('#discussion').append('<li><strong>' + htmlEncode(name)
+                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                };
+
+                $('#message-text').focus();
+
+                $.connection.hub.start().done(function () {
+                    $('#myButton').click(function () {
+
+                        chat.server.send($('#recipient-name').val(), $('#message-text').val());
+                        $('#discussion').append('<li><strong>Me</strong>: ' + htmlEncode($('#message-text').val()) + '</li>');
+
+                        $('#message-text').val('').focus();
+                    });
+                });
+            });
+            function htmlEncode(value) {
+                        var encodedValue = $('<div />').text(value).html();
+                        return encodedValue;
+                    }
+
+        </script>
 
