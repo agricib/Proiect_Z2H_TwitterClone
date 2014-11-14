@@ -95,20 +95,6 @@
     </div>
 
 
-<div id="message">
-    
-    <h2 class="collapsible-heading collapsible-heading-collapsed">
-        <a href="#" class="collapsible-heading-toggle">
-            <span class="collapsible-heading-status">Show </span>
-            Details
-        </a>
-    </h2>
-    <ul aria-hidden="true"
-        class="collapsible-content collapsible-content-collapsed">
-        <li>purple-flower.tif <em>Not a supported file format</em></li>
-        <li>flower-photos.zip <em>Not a supported file format</em></li>
-    </ul>
-</div>
 
         <script>
             $('#myButton').on('click', function () {
@@ -285,45 +271,4 @@
             });
 
         </script>
-=======
-        });
-        moveuser(findedusers);
-    });
-  
 
-    function showModal(userName) {
-        $('.btnuser').on('show.bs.modal', function () {
-            $('#recipient-name').val(userName);
-        })
-        $('.btnuser').modal();
-
-    }
-    $(function () {
-         
-        var chat = $.connection.chatHub;
-        
-        chat.client.addNewMessageToPage = function (name, message) {
-            
-            $('#discussion').append('<li><strong>' + htmlEncode(name)
-                + '</strong>: ' + htmlEncode(message) + '</li>');
-        };
-       
-        $('#message-text').focus();
-       
-        $.connection.hub.start().done(function () {
-            $('#SendMessagebtn').click(function () {
-                 
-                chat.server.send($('#recipient-name').val(), $('#message-text').val());
-                
-                $('#message-text').val('').focus();
-            });
-        });
-    });
-    
-    function htmlEncode(value) {
-        var encodedValue = $('<div />').text(value).html();
-        return encodedValue;
-    }
- 
-</script>
->>>>>>> origin/master
