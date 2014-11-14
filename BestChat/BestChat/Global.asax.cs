@@ -21,6 +21,8 @@ namespace BestChat
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(5);
             GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(10);
+
+           
         }
     }
 }
