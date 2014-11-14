@@ -50,6 +50,18 @@
     <Compile Include="Migrations\201411111621218_InitialCreate.Designer.cs">
       <DependentUpon>201411111621218_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411141330213_Message.cs" />
+    <Compile Include="Migrations\201411141330213_Message.Designer.cs">
+      <DependentUpon>201411141330213_Message.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411141358560_Message1.cs" />
+    <Compile Include="Migrations\201411141358560_Message1.Designer.cs">
+      <DependentUpon>201411141358560_Message1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411141405284_change.cs" />
+    <Compile Include="Migrations\201411141405284_change.Designer.cs">
+      <DependentUpon>201411141405284_change.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +79,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201411111621218_InitialCreate.resx">
       <DependentUpon>201411111621218_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411141330213_Message.resx">
+      <DependentUpon>201411141330213_Message.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411141358560_Message1.resx">
+      <DependentUpon>201411141358560_Message1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411141405284_change.resx">
+      <DependentUpon>201411141405284_change.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

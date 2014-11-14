@@ -3,6 +3,7 @@ using Microsoft.AspNet.SignalR;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using User.Entities;
 
 namespace BestChat
 {
@@ -13,6 +14,17 @@ namespace BestChat
         {
             string name = Context.User.Identity.Name;
             Clients.Group(names).addNewMessageToPage(name + ": " + message);
+            //using (var context = new UserContext())
+            //{
+            //    context.MessageSet.Add(new Message()
+            //    {
+            //        Sender=name.ToString(),
+            //        Receiver=names.ToString(),
+            //        TextMessage=message,
+            //        Time = DateTime.Now
+            //    });
+            //    context.SaveChanges();
+            //}
         }
 
         public override Task OnConnected()

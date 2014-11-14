@@ -6,6 +6,6 @@ namespace DataModels
     public class UserContext : DbContext 
     {
         public DbSet<UserInfo> UserSet { get; set; }
-
+        public DbSet<Message> MessageSet { get; set; }
     }
 }
