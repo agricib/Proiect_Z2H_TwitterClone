@@ -10,6 +10,8 @@
 <div class="container" style="width: 100%; margin: 50px auto; ">
     <div class="row" style="width:100%;">
         <div class="col-md-3">
+
+         
             <div class="list-group input-group-sm">
                           
                 <a href="#" class="list-group-item">
@@ -19,8 +21,47 @@
 
                 </a>
                
+                </div>
+            
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        RECENT CHAT HISTORY
+                    </div>
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs small">
+                            <li role="presentation" class="active"><a href="#">User1</a></li>
+                            <li role="presentation"><a href="#">User2</a></li>
+                            <li role="presentation"><a href="#">User2</a></li>
+                            <li role="presentation"><a href="#">User2</a></li>
+                            <li role="presentation"><a href="#">User2</a></li>
+                        </ul>
+                        <ul class="media-list">
+                            <li class="media">
+
+                                <div class="media-body">
+
+                                    <div class="media">
+                                        <a class="pull-left" href="#">
+                                        </a>
+                                        <div class="media-body">
+                                            Salut!
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Enter Message">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button">SEND</button>
+                                </span>
             </div>
         </div>
+                    </div>
+                </div>
+            </div>
+      
         <div class="col-md-7" id="map" style="height:450px"></div>
         <div class="col-md-2">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -45,7 +86,7 @@
             <ul id="discussion"></ul>
         </div>*@
     </div>
-</div>
+
 
 
 <div class="modal fade btnuser" id="BestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,7 +120,6 @@
         </div>
     </div>
 </div>
-
 
 
 
@@ -213,10 +253,10 @@
 
             };
 
-    $("#buton-SearchUser").on("click",function searchUser () {
+    $("#buton-SearchUser").on("click", function searchUser() {
                 var username = $("#input-SearchUser").val();
                 var findedusers = [];
-        onlineusers.forEach(function  (user) {
+        onlineusers.forEach(function (user) {
                     if (user.UserName.indexOf(username) > -1) {
                         findedusers.push(user);
                     }
@@ -239,7 +279,7 @@
 
                 var chat = $.connection.chatHub;
                 chat.client.addNewMessageToPage = function (message) {
-                    
+
                     $('#discussion').append('<li><strong>' + htmlEncode(name)
                     + '</strong> ' + htmlEncode(message) + '</li>');
                 };
@@ -248,7 +288,7 @@
 
                 $.connection.hub.start().done(function () {
                     $('#myButton').click(function () {
-                        
+
                         chat.server.send($('#recipient-name').val(), $('#message-text').val());
                         $('#discussion').append('<li><strong>Me</strong>' + htmlEncode($('#message-text').val()) + '</li>');
 
