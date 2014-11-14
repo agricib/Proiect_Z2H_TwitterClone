@@ -26,8 +26,9 @@
             <div class="bs-example bs-example-tabs" role="tabpanel">
                 <ul id="myTab" class="nav nav-tabs" role="tablist"></ul>
                 <div id="myTabContent" class="tab-content">
-                    <div id="SendMessege" style="display:none"><input type="text" class="form-control SendMessege" placeholder="Send Messege" style="width:75%;"><button class="btn btn-info SendMessege" type="button">Send</button></div>
+                    
                 </div>
+                <div id="SendMessege" style="display:none"><input type="text" class="form-control SendMessege" placeholder="Send Messege" style="width:75%;"><button class="btn btn-info SendMessege" type="button">Send</button></div>
             </div>
         </div>
 
@@ -212,8 +213,8 @@
 
     var showChat = function (user) {
         if ($('#' + user + 'tab').length === 0) {
-            var tab = '<li role="presentation"><a href="#home" id="' + user + 'tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"</a>' + user + '</li>';
-            var chats = ' <div role="tabpanel" class="tab-pane fade in active" id="' + user + 'panel" aria-labelledby="' + user + '"></div>'
+            var tab = '<li role="presentation"><a href="#' + user + 'panel" id="' + user + '-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"</a>' + user + '</li>';
+            var chats = ' <div role="tabpanel" class="tab-pane" id="' + user + 'panel" aria-labelledby="' + user + '-tab" style="height:250px"></div>'
             $('#myTab').append(tab);
             $('#myTabContent').append(chats);
 
