@@ -22,24 +22,11 @@ namespace BestChat
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-              //  clientId: "",
-                //clientSecret: "");
-
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
-
-            app.UseFacebookAuthentication(
-               appId: "",
-               appSecret: "");
-
             app.UseGoogleAuthentication();
 
             app.UseFacebookAuthentication(
-          appId: "385592041606856",
-          appSecret: "1279746354dca5d1f72ee1c1a24dfea5");
+                appId: "385592041606856",
+                appSecret: "1279746354dca5d1f72ee1c1a24dfea5");
 
         }
     }
