@@ -210,7 +210,7 @@
 
     var showChat = function (user) {
         var tab = '<li role="presentation" class="active"><a href="#home" id="\'' + user + '\'" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"</a>\'' + user + '\'</li>';
-        var chats = ' <div role="tabpanel" class="tab-pane fade in active" id="\'' + user + '\'" aria-labelledby="home-tab"></div>'
+        var chats = ' <div role="tabpanel" class="tab-pane fade in active" id="\'' + user + '\'" aria-labelledby="home-tab"></div><div><input type="text" class="form-control" placeholder="Send Messege" id="SendMessege" style="width:75%"><button class="btn btn-info" type="button" id="SendMessege">Send</button></div>'
         $('#myTab').append(tab);
         $('#myTabContent').append(chats);
     };
