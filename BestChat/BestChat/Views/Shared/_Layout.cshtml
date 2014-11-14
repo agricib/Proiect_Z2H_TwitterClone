@@ -46,6 +46,7 @@
     <script>
         $.connection.hub.start()
         .done(function () {
+            var notifications = $.connection.notificationsHub;
             $.connection.chat.server.registerMe();
 
         })
