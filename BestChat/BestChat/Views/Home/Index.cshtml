@@ -23,10 +23,27 @@
         </div>
         <div class="col-md-7" id="map" style="height:450px"></div>
         <div class="col-md-2">
-
-            <ul class="list-group">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel-heading  " typeof="" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="btn btn-info" style="width:100%"><p style="font-size:16px">My Users</p></button>
+                        </a>
+                    </h4>
+                </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="list-group">
+                            <ul class="list-group">
+                                <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<ul class="list-group">
                 <li class="list-group-item" id="list-useri" style="list-style:none;"></li>
-            </ul>
+            </ul>*@
+
         </div>
         <div class="container">
             <ul id="discussion"></ul>
@@ -64,22 +81,7 @@
     </div>
 </div>
 
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                     My Users
-                </a>
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="list-group">
-                ..... 
-            </div>
-        </div>
-    </div>
-    </div>
+
 
 
 
