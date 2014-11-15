@@ -11,7 +11,8 @@ using User.Entities;
 namespace BestChat.ApiControllers
 {
     public class UserPositionController : ApiController
-    {
+    {   
+        //ia userii din baza de date doar din parametru hartii
         // GET api/<controller>
         public IEnumerable<UserInfo> Get(double east, double west, double north, double south)
         {
@@ -32,6 +33,7 @@ namespace BestChat.ApiControllers
         }
 
         // POST api/<controller>
+        //actualizeaza baza de date cu coordonatele actuale ale utilizatorului
         public void Post([FromBody]PositionModel position)
         {
             if (User.Identity.IsAuthenticated)

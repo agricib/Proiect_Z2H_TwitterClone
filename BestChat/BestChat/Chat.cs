@@ -25,15 +25,16 @@ namespace BestChat
 
                 if (user == null)
                 {
-                    user = new UserInfo
+                    db.UserSet.Add(new UserInfo()
                     {
+                        Latitude = 0,
+                        Longitude = 0,
+                        PositionDate = DateTime.Now,
+                        Online = true,
                         UserName = name,
-                    };
-                    db.UserSet.Add(user);
+                        
+                    });
                 }
-
-                user.Online = true;
-
                 db.SaveChanges();
             }
 

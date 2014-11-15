@@ -11,6 +11,7 @@ namespace BestChat.ApiControllers
 {
     public class SearchController : ApiController
     {
+        //at cand se face o cere de post catre server cauta in baza de date si returneaza toti utilizatorii care incep cu acel cuvant
         // POST api/<controller>
         public IEnumerable<UserInfo> Post([FromBody]string username)
         {
